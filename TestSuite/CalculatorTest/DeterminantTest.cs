@@ -55,7 +55,7 @@ namespace TestSuite.CalculatorTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IdentityMatrixException))]
+        [ExpectedException(typeof(Dimension_1x1_Exception))]
         public void Determinant_1x1_IdentityMatrixException()
 
         {

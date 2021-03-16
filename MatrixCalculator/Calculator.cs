@@ -87,7 +87,7 @@ namespace MatrixCalculator
 
             if (matrix.GetLength(0) == 1)
             {
-                throw new IdentityMatrixException(matrix);
+                throw new Dimension_1x1_Exception(matrix);
             }
 
             switch (matrix.GetLength(0))
@@ -130,7 +130,6 @@ namespace MatrixCalculator
                 float[,] cut_matrix = CutRowAndCol(matrix, 0, row);
                 det = det + (degree * matrix[0,row] * Determinant_NxN(cut_matrix));
                 degree = degree * (-1);
-
             }
 
             return det;
@@ -163,123 +162,6 @@ namespace MatrixCalculator
 
             return res;
         }
-
-        // TODO: Remove me
-        public ushort RankO(float[,] matrix)
-        {
-            bool zero_flag = true;
-            foreach (ushort elem in matrix)
-            {
-                if (elem != 0)
-                {
-                    zero_flag = !zero_flag;
-                    break;
-                }
-            }
-
-            if (zero_flag)
-            {
-                return 0;
-            }
-
-            ushort rank = matrix.GetLength(0) > matrix.GetLength(1) ? (ushort) matrix.GetLength(0) : (ushort) matrix.GetLength(1);
-            bool[] line = new bool[matrix.GetLength(1)];
-            for (ushort x = 0; x < matrix.GetLength(0); x++)
-            {
-                ushort y;
-                for (y = 0; y < matrix.GetLength(1); y++)
-                {
-                    if (!line[y] && Math.Abs(matrix[x,y]) > double.Epsilon)
-                    {
-                        break;
-                    }
-                }
-            
-                if ( y == matrix.GetLength(1))
-                {
-                    rank--;
-                }
-                else
-                {
-                    line[y] = true;
-                    for (ushort i = (ushort)(x + 1); i < matrix.GetLength(0); i++)
-                    {
-                        matrix[i, y] /= matrix[x, y];
-                    }
-                    for (ushort k = 0; k < matrix.GetLength(1); k++)
-                    {
-                        if (k != y && Math.Abs(matrix[x, k]) > double.Epsilon)
-                        {
-                            for (ushort i = (ushort)(x + 1); i < matrix.GetLength(0); i++)
-                            {
-                                matrix[i, k] -= matrix[i, y] * matrix[x, k];
-                                //matrix[k, i] -= matrix[y, i] * matrix[k, x];
-                            }
-                        }
-                    }
-                }
-            }
-
-            ushort real_rang = 0;
-            foreach(bool l in line)
-            {
-                if (l)
-                {
-                    real_rang++;
-                }
-            }
-
-
-           return real_rang;
-           
-        }
-
-        // TODO: Remove me
-        public ushort RankKEK(float[,] matrix)
-        {
-            int n = matrix.GetLength(0);
-            int m = matrix.GetLength(1);
-
-            ushort rank = (ushort)Math.Max(n, m);
-            bool[] line_used = new bool[n];
-            for (ushort i = 0; i < m; i++)
-            {
-                ushort j;
-                for (j = 0; j < n; j++)
-                {
-                    if (!line_used[j] && Math.Abs(matrix[j, i]) > double.Epsilon)
-                    {
-                        break;
-                    }
-                }
-
-                if (j == n)
-                {
-                    rank--;
-                }
-                else
-                {
-                    line_used[j] = true;
-                    for (ushort p = (ushort)(i + 1); p < m; p++)
-                    {
-                        matrix[j, p] /= matrix[j, i];
-                    }
-                    for (ushort k = 0; k < n; k++)
-                    {
-                        if (k != j && Math.Abs(matrix[k, i]) > double.Epsilon)
-                        {
-                            for (ushort p = (ushort)(i + 1); p < m; p++)
-                            {
-                                matrix[k, p] -= matrix[j, p] * matrix[k, i];
-                            }
-                        }
-                    }
-                }
-            }
-
-            return rank;
-        }
-
 
         public ushort Rank(float[,] matrix)
         {
@@ -325,9 +207,9 @@ namespace MatrixCalculator
                     {
                         if (matrix[i,row] != 0)
                         {
-                            // Swap Rows
                             for (ushort i2 = 0; i2 < rank; i2++)
                             {
+                                // Try Optimize
                                 float temp = matrix[row, i2];
                                 matrix[row, i2] = matrix[i, i2];
                                 matrix[i, i2] = temp;
@@ -353,9 +235,107 @@ namespace MatrixCalculator
             return (ushort)(rank == 0 ? 1 : rank);
         }
 
-        public float[,] Reverse(float[,] matrix)
+        // https://forum.vingrad.ru/topic-193218.html
+        public float[,] Inverse(float[,] matrix)
         {
-            throw new NotImplementedException();
+            float det = Determinant(matrix);
+            if (Determinant(matrix) == 0)
+            {
+                throw new ZeroDeterminant_Exception(det);
+            }
+
+            ushort dimension = (ushort)matrix.GetLength(0);
+            float[,] identity_matrix = new float[dimension, dimension];
+
+            for (ushort row = 0; row < dimension; row++)
+            {
+                for (ushort col = 0; col < dimension; col++)
+                {
+                    if (row == col)
+                    {
+                        identity_matrix[row,col] = 1;
+                    }
+                }
+            }
+
+            for (ushort row = 0; row < dimension; row++)
+            {
+                // Если Разрешающий = 0 поиск и обмен строк
+                if (matrix[row, row] == 0)
+                {
+                    for (ushort row_2 = 0; row_2 < dimension; row_2++)
+                    {
+                        if (matrix[row_2, row] != 0)
+                        {
+                            for (ushort i = 0; i < dimension; i++)
+                            {
+                                float tmp = matrix[row, i];
+                                matrix[row, i] = matrix[row_2, i];
+                                matrix[row_2, i] = tmp;
+
+                                tmp = identity_matrix[row, i];
+                                identity_matrix[row, i] = identity_matrix[row_2, i];
+                                identity_matrix[row_2, i] = tmp;
+                            }
+                        }
+                    }
+
+                    // Повторная проверка
+                    if (matrix[row, row] == 0)
+                    {
+                        continue;
+                    }
+                }
+
+                for (ushort col = (ushort)(row + 1); col < dimension; col++)
+                {
+                    matrix[row, col] /= matrix[row, row];
+                }
+
+                for (ushort col = 0; col < dimension; col++)
+                {
+                    identity_matrix[row, col] /= matrix[row, row];
+                }
+                matrix[row, row] /= matrix[row, row];
+
+                if (row > 0)
+                {
+                    for (ushort row_2 = 0; row_2 < row; row_2++)
+                    {
+                        for (ushort col_2 = 0; col_2 < dimension; col_2++)
+                        {
+                            identity_matrix[row_2, col_2] = identity_matrix[row_2, col_2] - identity_matrix[row, col_2] * matrix[row_2, row];
+                        }
+                        for (ushort col_2 = (ushort)(dimension - 1); col_2 >= row; col_2--)
+                        {
+                            matrix[row_2, col_2] = matrix[row_2, col_2] - matrix[row, col_2] * matrix[row_2, row];
+                        }
+                    }
+                }
+                for (ushort row_2 = (ushort)(row + 1); row_2 < dimension; row_2++)
+                {
+                    for (ushort col_2 = 0; col_2 < dimension; col_2++)
+                    {
+                        identity_matrix[row_2, col_2] = identity_matrix[row_2, col_2] - identity_matrix[row, col_2] * matrix[row_2, row];
+                    }
+                    for (ushort col_2 = (ushort)(dimension - 1); col_2 > row; col_2--)
+                    {
+                        matrix[row_2, col_2] = matrix[row_2, col_2] - matrix[row, col_2] * matrix[row_2, row];
+                    }
+    
+                }
+            }
+
+            // Rounding
+            for (ushort row = 0; row < dimension; row++)
+            {
+                for (ushort col = 0; col < dimension; col++)
+                {
+                    identity_matrix[row, col] = (float)Math.Round(identity_matrix[row, col], 7);
+                }
+            }
+
+            return identity_matrix;
         }
 
 

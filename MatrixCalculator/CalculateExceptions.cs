@@ -59,16 +59,30 @@ namespace MatrixCalculator
         { }
     }
 
-    public class IdentityMatrixException : CalculateException
+    public class Dimension_1x1_Exception : CalculateException
     {
-        public IdentityMatrixException()
+        public Dimension_1x1_Exception()
         { }
 
-        public IdentityMatrixException(float[,] matrix)
+        public Dimension_1x1_Exception(float[,] matrix)
             : base(String.Format(
                                 "Операция невозможна. Матрица не должна быть единичной: A_{0}x{1}",
                                 matrix.GetLength(0),
                                 matrix.GetLength(1)
+                                )
+                  )
+        { }
+    }
+
+    public class ZeroDeterminant_Exception : CalculateException
+    {
+        public ZeroDeterminant_Exception()
+        { }
+
+        public ZeroDeterminant_Exception(float det)
+            : base(String.Format(
+                                "Операция невозможна. Определитель должен быть отличен от \"0\": detA = {0}",
+                                det
                                 )
                   )
         { }

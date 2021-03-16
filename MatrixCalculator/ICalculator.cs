@@ -10,7 +10,7 @@ namespace MatrixCalculator
         float[,] Multi(float[,] matrix, float number);
         float Determinant(float[,] matrix);
         float[,] Transpose(float[,] matrix);
-        float[,] Reverse(float[,] matrix);
+        float[,] Inverse(float[,] matrix);
         ushort Rank(float[,] matrix);
     }
 }
