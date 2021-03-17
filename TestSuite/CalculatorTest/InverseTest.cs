@@ -2,20 +2,18 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace TestSuite.CalculatorTest
+namespace TestSuite.MatrixCalculator
 {
     [TestClass]
     public class InverseTest
     {
-        private static ICalculator calculator = new Calculator();
-
         [TestMethod]
         public void Inverse_2x2_Ok()
         {
             float[,] m = new float[2, 2] { { 1, 2 }, { 3, 4 } };
             float[,] e = new float[2, 2] { { -2, 1 }, { 1.5F, -0.5F } };
 
-            float[,] res = calculator.Inverse(m);
+            float[,] res = MatCalc.Inverse(m);
             for (ushort x = 0; x < m.GetLength(0); x++)
             {
                 for (ushort y = 0; y < m.GetLength(1); y++)
@@ -31,7 +29,7 @@ namespace TestSuite.CalculatorTest
             float[,] m = new float[3, 3] { { 3, 0, 2 }, { 2, 0, -2 }, { 0, 1, 1 } };
             float[,] e = new float[3, 3] { { 0.2F, 0.2F, 0 }, { -0.2F, 0.3F, 1 }, { 0.2F, -0.3F, 0 } };
 
-            float[,] res = calculator.Inverse(m);
+            float[,] res = MatCalc.Inverse(m);
             for (ushort x = 0; x < m.GetLength(0); x++)
             {
                 for (ushort y = 0; y < m.GetLength(1); y++)
@@ -58,7 +56,7 @@ namespace TestSuite.CalculatorTest
                 { -1.12F, 0.04F, 0.36F, -0.96F }
             };
 
-            float[,] res = calculator.Inverse(m);
+            float[,] res = MatCalc.Inverse(m);
             for (ushort x = 0; x < m.GetLength(0); x++)
             {
                 for (ushort y = 0; y < m.GetLength(1); y++)
@@ -73,15 +71,15 @@ namespace TestSuite.CalculatorTest
         public void Inverse_1x1_Ok()
         {
             float[,] m = new float[1, 1] { { 2 } };
-            calculator.Inverse(m);
+            MatCalc.Inverse(m);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ZeroDeterminant_Exception))]
+        [ExpectedException(typeof(ZeroDeterminantException))]
         public void Inverse_2x2_ZeroDeterminant_Exception()
         {
             float[,] m = new float[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-            calculator.Inverse(m);
+            MatCalc.Inverse(m);
         }
     }
     

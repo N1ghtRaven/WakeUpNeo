@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MatrixCalculator
 {
@@ -74,12 +72,12 @@ namespace MatrixCalculator
         { }
     }
 
-    public class ZeroDeterminant_Exception : CalculateException
+    public class ZeroDeterminantException : CalculateException
     {
-        public ZeroDeterminant_Exception()
+        public ZeroDeterminantException()
         { }
 
-        public ZeroDeterminant_Exception(float det)
+        public ZeroDeterminantException(float det)
             : base(String.Format(
                                 "Операция невозможна. Определитель должен быть отличен от \"0\": detA = {0}",
                                 det

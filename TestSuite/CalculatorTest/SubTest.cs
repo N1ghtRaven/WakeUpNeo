@@ -1,13 +1,11 @@
 ﻿using MatrixCalculator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TestSuite.CalculatorTest
+namespace TestSuite.MatrixCalculator
 {
     [TestClass]
     public class SubTest
     {
-        private static ICalculator calculator = new Calculator();
-
         [TestMethod]
         public void Sub_3x3_3x3_Ok()
         {
@@ -15,7 +13,7 @@ namespace TestSuite.CalculatorTest
             float[,] m2 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
 
             float[,] exp = new float[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-            float[,] res = calculator.Sub(m1, m2);
+            float[,] res = MatCalc.Sub(m1, m2);
 
             for (ushort x = 0; x < 3; x++)
             {
@@ -33,7 +31,7 @@ namespace TestSuite.CalculatorTest
             float[,] m1 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
             float[,] m2 = new float[3, 4] { { 1, 2, 3, 0 }, { 4, 5, 6, 0 }, { 7, 8, 9, 0 } };
 
-            calculator.Sub(m1, m2);
+            MatCalc.Sub(m1, m2);
         }
     }
 }
