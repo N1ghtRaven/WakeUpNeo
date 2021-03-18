@@ -252,7 +252,7 @@
         }
 
         /// <summary>
-        /// Вычисляет ранг матрицы и возвращает его.
+        /// Вычисляет ранг матрицы методом перебора миноров и возвращает его.
         /// </summary>
         /// <returns>
         /// Ранг матрицы.
@@ -278,59 +278,31 @@
             }
 
             // Объявление размеров (просто для удобства)
-            ushort m = (ushort)matrix.GetLength(0);
-            ushort n = (ushort)matrix.GetLength(1);
+            ushort n = (ushort)matrix.GetLength(0);
+            ushort m = (ushort)matrix.GetLength(1);
 
-            // Поиск наименьшей стороны матрицы, т.к. ранг не может превосходить min(M,N)
-            ushort rank = m < n ? m : n;
-            for (ushort row = 0; row < rank; row++)
+            ushort rank = 0;
+            for (ushort minor_dimension = 2; minor_dimension <= (m < n ? m : n); minor_dimension++)
             {
-                // Проверка на "нулевой" элемент главной диагонали 
-                if (matrix[row,row] != 0)
+                // Создание матрицы минора
+                float[,] minor_mat = new float[minor_dimension, minor_dimension];
+                for (ushort row = 0; row < (n - (minor_dimension - 1)); row++)
                 {
-                    for (ushort col = 0; col < m; col++)
+                    for (ushort col = 0; col < (m - (minor_dimension - 1)); col++)
                     {
-                        // Проверка на не принадлежность элемента к главной диагонали
-                        if (col != row)
+                        for (ushort row_2 = 0; row_2 < minor_dimension; row_2++)
                         {
-                            float multi = matrix[col,row] / matrix[row,row];
-                            for (ushort i = 0; i < rank; i++)
+                            for (ushort col_2 = 0; col_2 < minor_dimension; col_2++)
                             {
-                                matrix[col,i] -= multi * matrix[row,i];
+                                minor_mat[row_2, col_2] = matrix[row + row_2, col + col_2];
                             }
                         }
-                    }
-                }
-                else
-                {
-                    // Поиск "нулевой" строки
-                    bool reduce_flag = true;
-                    for (ushort i = (ushort)(row + 1); i < m; i++)
-                    {
-                        if (matrix[i,row] != 0)
-                        {
-                            // Обмен двух строк
-                            for (ushort i2 = 0; i2 < rank; i2++)
-                            {
-                                float tmp = matrix[row, i2];
-                                matrix[row, i2] = matrix[i, i2];
-                                matrix[i, i2] = tmp;
-                            }
 
-                            reduce_flag = false;
-                            break;
-                        }
-                    }
-
-                    // Копирование строки проверяемого индекса ранга в нулевую строку
-                    if (reduce_flag)
-                    {
-                        rank--;
-                        for (ushort i = 0; i < m; i++)
+                        // Определение минора
+                        if (Determinant(minor_mat) != 0)
                         {
-                            matrix[i,row] = matrix[i,rank];
+                            rank = minor_dimension;
                         }
-                        row--;
                     }
                 }
             }
@@ -339,7 +311,7 @@
         }
 
         /// <summary>
-        /// Вычисляет обратную матрицу и возвращает её.
+        /// Вычисляет обратную матрицу методом Йордана-Гаусса и возвращает её.
         /// </summary>
         /// <returns>
         /// Обратная матрица.
