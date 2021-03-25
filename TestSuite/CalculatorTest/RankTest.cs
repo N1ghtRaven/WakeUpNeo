@@ -10,7 +10,7 @@ namespace TestSuite.MatrixCalculator
         public void Rank_2x4_Zero_Ok()
         {
             float[,] matrix = new float[2, 4] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 0, rank.ToString());
         }
@@ -19,7 +19,7 @@ namespace TestSuite.MatrixCalculator
         public void Rank_2x2_2_Ok()
         {
             float[,] matrix = new float[2, 2] { { 1, 2 }, { 3, 4 } };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 2, rank.ToString());
         }
@@ -28,7 +28,7 @@ namespace TestSuite.MatrixCalculator
         public void Rank_2x3_2_Ok()
         {
             float[,] matrix = new float[2, 3] { { 5, -7, 0.5F }, { 88, 2, 0 } };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 2, rank.ToString());
         }
@@ -37,7 +37,7 @@ namespace TestSuite.MatrixCalculator
         public void Rank_2x4_1_Ok()
         {
             float[,] matrix = new float[2, 4] { { 0, 0, 0, 0 }, { 0, 0, 0, 1 } };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 1, rank.ToString());
         }
@@ -46,7 +46,7 @@ namespace TestSuite.MatrixCalculator
         public void Rank_3x3_2_Ok()
         {
             float[,] matrix = new float[3, 3] { { 4, 5, 6 }, { 7, 8, 9 }, { 5, 4, 3 } };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 2);
         }
@@ -55,7 +55,7 @@ namespace TestSuite.MatrixCalculator
         public void Rank_3x3_3_Ok()
         {
             float[,] matrix = new float[3, 3] { { 4, 5, 6 }, { 7, 8, 9 }, { 5, 9, 9 } };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 3);
         }
@@ -68,7 +68,7 @@ namespace TestSuite.MatrixCalculator
                 { 4, -2, 5, 1, 7 }, 
                 { 2, -1, 1, 8, 2 }
             };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 2, rank.ToString());
         }
@@ -81,7 +81,7 @@ namespace TestSuite.MatrixCalculator
                 { 35, 9, -26, 0.3F, 0 },
                 { 78, 224, 54, 0.45F, 2 }
             };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 3, rank.ToString());
         }
@@ -95,7 +95,7 @@ namespace TestSuite.MatrixCalculator
                 { -3, 1, -5, 0, -7 },
                 { -5, 7, 1, 4, 1 }
             };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 3, rank.ToString());
         }
@@ -109,7 +109,7 @@ namespace TestSuite.MatrixCalculator
                 { 56, -94, -0.4F, -64, 5, 0.256F },
                 { -541, 6, -54, 0.3F, 58, 4 }
             };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 4, rank.ToString());
         }
@@ -123,7 +123,7 @@ namespace TestSuite.MatrixCalculator
                 { 54, 0, 55, 65, 5, -88, -0.666F },
                 { 45, 458, 4, 7, 38, 73, -0.3654F }
             };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 4, rank.ToString());
         }
@@ -138,7 +138,7 @@ namespace TestSuite.MatrixCalculator
                 { -887, 0.365F },
                 { 0.2F, 0.1F }
             };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 2, rank.ToString());
         }
@@ -153,7 +153,7 @@ namespace TestSuite.MatrixCalculator
                 { 75, 0.4F, 456 },
                 { -69, 54, -0.47F }
             };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 3, rank.ToString());
         }
@@ -162,7 +162,7 @@ namespace TestSuite.MatrixCalculator
         public void Rank_5x4_4_Ok()
         {
             float[,] matrix = new float[5, 4] { { 435, 345, 234, 345 }, { 234, 345, 456, 435 }, { 234, 345, 546, 25 }, { 345, 36, 456, 345 }, { 234, 234, 345, 234 } };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 4, rank.ToString());
         }
@@ -178,7 +178,7 @@ namespace TestSuite.MatrixCalculator
                 { 0.36F, 12, -2, 12.36F },
                 { -86, -9.6F, 7.25F, 45 }
             };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 4, rank.ToString());
         }
@@ -194,7 +194,7 @@ namespace TestSuite.MatrixCalculator
                 { 56, -5, -6.33F, 0.38F, 2 },
                 { 0, 2.36F, 33, 4.3F, -9.4F }
             };
-            ushort rank = MatCalc.Rank(matrix);
+            ushort rank = MatrixMath.Rank(matrix);
 
             Assert.IsTrue(rank == 5, rank.ToString());
         }

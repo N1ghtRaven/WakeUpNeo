@@ -13,7 +13,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m2 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
 
             float[,] exp = new float[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-            float[,] res = MatCalc.Sub(m1, m2);
+            float[,] res = MatrixMath.Sub(m1, m2);
 
             for (ushort x = 0; x < 3; x++)
             {
@@ -31,7 +31,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m1 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
             float[,] m2 = new float[3, 4] { { 1, 2, 3, 0 }, { 4, 5, 6, 0 }, { 7, 8, 9, 0 } };
 
-            MatCalc.Sub(m1, m2);
+            MatrixMath.Sub(m1, m2);
         }
     }
 }

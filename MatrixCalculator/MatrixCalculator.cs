@@ -4,7 +4,7 @@
     /// Основной класс Матричного калькулятора.
     /// Содержит все необходимые методы для основных операций над матрицами.
     /// </summary>
-    public class MatCalc
+    public class MatrixMath
     {
         /// <summary>
         /// Складывает две матрицы с возвращает результат.
@@ -159,7 +159,6 @@
         /// Определитель матрицы.
         /// </returns>
         /// <exception cref="NotSquareException">Срабатывает когда матрица является прямоугольной.</exception>
-        /// <exception cref="Dimension_1x1_Exception">Срабатывает когда размерность матрицы равна "1".</exception>
         /// <param name="matrix">Матрица для которой вычисляется определитель.</param>
         public static float Determinant(float[,] matrix)
         {

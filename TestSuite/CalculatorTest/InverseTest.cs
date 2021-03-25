@@ -12,7 +12,7 @@ namespace TestSuite.MatrixCalculator
         {
             float[,] m = new float[1, 1] { { 2 } };
             float[,] e = new float[1, 1] { { 0.5F } };
-            float[,] r = MatCalc.Inverse(m);
+            float[,] r = MatrixMath.Inverse(m);
 
             Assert.IsTrue(e[0, 0] == r[0, 0]);
         }
@@ -23,7 +23,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m = new float[2, 2] { { 3, -5 }, { 1, -2 } };
             float[,] e = new float[2, 2] { { 2, -5 }, { 1, -3 } };
 
-            float[,] res = MatCalc.Inverse(m);
+            float[,] res = MatrixMath.Inverse(m);
             for (ushort x = 0; x < m.GetLength(0); x++)
             {
                 for (ushort y = 0; y < m.GetLength(1); y++)
@@ -39,7 +39,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m = new float[2, 2] { { 1, 2 }, { 3, 4 } };
             float[,] e = new float[2, 2] { { -2, 1 }, { 1.5F, -0.5F } };
 
-            float[,] res = MatCalc.Inverse(m);
+            float[,] res = MatrixMath.Inverse(m);
             for (ushort x = 0; x < m.GetLength(0); x++)
             {
                 for (ushort y = 0; y < m.GetLength(1); y++)
@@ -55,7 +55,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m = new float[2, 2] { { 1, 2 }, { 3, 5 } };
             float[,] e = new float[2, 2] { { -5, 2 }, { 3, -1 } };
 
-            float[,] res = MatCalc.Inverse(m);
+            float[,] res = MatrixMath.Inverse(m);
             for (ushort x = 0; x < m.GetLength(0); x++)
             {
                 for (ushort y = 0; y < m.GetLength(1); y++)
@@ -71,7 +71,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m = new float[3, 3] { { 3, 0, 2 }, { 2, 0, -2 }, { 0, 1, 1 } };
             float[,] e = new float[3, 3] { { 0.2F, 0.2F, 0 }, { -0.2F, 0.3F, 1 }, { 0.2F, -0.3F, 0 } };
 
-            float[,] res = MatCalc.Inverse(m);
+            float[,] res = MatrixMath.Inverse(m);
             for (ushort x = 0; x < m.GetLength(0); x++)
             {
                 for (ushort y = 0; y < m.GetLength(1); y++)
@@ -98,7 +98,7 @@ namespace TestSuite.MatrixCalculator
                 { -1.12F, 0.04F, 0.36F, -0.96F }
             };
 
-            float[,] res = MatCalc.Inverse(m);
+            float[,] res = MatrixMath.Inverse(m);
             for (ushort x = 0; x < m.GetLength(0); x++)
             {
                 for (ushort y = 0; y < m.GetLength(1); y++)
@@ -127,7 +127,7 @@ namespace TestSuite.MatrixCalculator
                 { 0, 0.5F, 0.5F, -0.5F, -0.25F }
             };
 
-            float[,] res = MatCalc.Inverse(m);
+            float[,] res = MatrixMath.Inverse(m);
             for (ushort x = 0; x < m.GetLength(0); x++)
             {
                 for (ushort y = 0; y < m.GetLength(1); y++)
@@ -158,7 +158,40 @@ namespace TestSuite.MatrixCalculator
                 { -0.6F, -0.9F, 2.3F, -0.2F, -0.1F, -2.9F }
             };
 
-            float[,] res = MatCalc.Inverse(m);
+            float[,] res = MatrixMath.Inverse(m);
+            for (ushort x = 0; x < m.GetLength(0); x++)
+            {
+                for (ushort y = 0; y < m.GetLength(1); y++)
+                {
+                    Assert.IsTrue((float)Math.Round(res[x, y], 4) == e[x, y], string.Format("Expected {0}, but have {1}", e[x, y], res[x, y]));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Inverse_7x7_Ok()
+        {
+            float[,] m = new float[7, 7] {
+                { 0, 0, 0, 0, 1, 0, 0 },
+                { 2, 0, -1, 2, 0, 0, 1 },
+                { 0, 1, 0, 2, -2, 0, 0 },
+                { 0, 0, 0, 2, 0, 2, 0 },
+                { 1, 1, -1, 1, -2, 0, -1 },
+                { 0, 2, 0, 0, 0, -2, 0 },
+                { -1, 1, -2, 0, 0, 0, 0 }
+            };
+
+            float[,] e = new float[7, 7] {
+                { -1, 0.25F, -0.75F, 0.375F, 0.25F, 0.375F, -0.25F },
+                { -2, 0, -1, 1, 0, 1, 0 },
+                { -0.5F, -0.125F, -0.125F, 0.3125F, -0.125F, 0.3125F, -0.375F },
+                { 2, 0, 1, -0.5F, 0, -0.5F, 0 },
+                { 1, 0, 0, 0, 0, 0, 0 },
+                { -2, 0, -1, 1, 0, 0.5F, 0 },
+                { -2.5F, 0.375F, -0.625F, 0.5625F, -0.625F, 0.5625F, 0.125F }
+            };
+
+            float[,] res = MatrixMath.Inverse(m);
             for (ushort x = 0; x < m.GetLength(0); x++)
             {
                 for (ushort y = 0; y < m.GetLength(1); y++)
@@ -173,8 +206,7 @@ namespace TestSuite.MatrixCalculator
         public void Inverse_2x2_ZeroDeterminant_Exception()
         {
             float[,] m = new float[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-            MatCalc.Inverse(m);
+            MatrixMath.Inverse(m);
         }
     }
-    
 }

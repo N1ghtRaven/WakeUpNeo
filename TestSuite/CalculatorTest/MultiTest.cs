@@ -13,7 +13,7 @@ namespace TestSuite.MatrixCalculator
             float num = 3;
 
             float[,] exp = new float[3, 3] { { 3, 6, 9 }, { 12, 15, 18 }, { 21, 24, 27 } };
-            float[,] res = MatCalc.Multi(m, num);
+            float[,] res = MatrixMath.Multi(m, num);
 
             for (ushort x = 0; x < 3; x++)
             {
@@ -31,7 +31,7 @@ namespace TestSuite.MatrixCalculator
             float[,] n = new float[1, 1] { { 3 } };
 
             float[,] exp = new float[3, 3] { { 3, 6, 9 }, { 12, 15, 18 }, { 21, 24, 27 } };
-            float[,] res = MatCalc.Multi(m, n);
+            float[,] res = MatrixMath.Multi(m, n);
 
             for (ushort x = 0; x < 3; x++)
             {
@@ -49,7 +49,7 @@ namespace TestSuite.MatrixCalculator
             float num = 0;
 
             float[,] exp = new float[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
-            float[,] res = MatCalc.Multi(m, num);
+            float[,] res = MatrixMath.Multi(m, num);
 
             for (ushort x = 0; x < 3; x++)
             {
@@ -67,7 +67,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m2 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
 
             float[,] exp = new float[3, 3] { { 30, 36, 42 }, { 66, 81, 96 }, { 102, 126, 150 } };
-            float[,] res = MatCalc.Multi(m1, m2);
+            float[,] res = MatrixMath.Multi(m1, m2);
 
             for (ushort x = 0; x < 3; x++)
             {
@@ -85,7 +85,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m2 = new float[2, 3] { { 1, 2, 3 }, { 4, 5, 6 } };
 
             float[,] exp = new float[3, 3] { { 9, 12, 15 }, { 24, 33, 42 }, { 39, 54, 69 } };
-            float[,] res = MatCalc.Multi(m1, m2);
+            float[,] res = MatrixMath.Multi(m1, m2);
 
             for (ushort x = 0; x < 3; x++)
             {
@@ -103,7 +103,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m2 = new float[3, 2] { { 1, 2 }, { 3, 4 }, { 5, 6 } };
 
             float[,] exp = new float[2, 2] { { 22, 28 }, { 49, 64 } };
-            float[,] res = MatCalc.Multi(m1, m2);
+            float[,] res = MatrixMath.Multi(m1, m2);
 
             for (ushort x = 0; x < 2; x++)
             {
@@ -121,7 +121,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m1 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
             float[,] m2 = new float[4, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 0, 0, 0 } };
 
-            MatCalc.Multi(m1, m2);
+            MatrixMath.Multi(m1, m2);
         }
 
         [TestMethod]
@@ -131,7 +131,7 @@ namespace TestSuite.MatrixCalculator
             float[,] m1 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
             float[,] m2 = new float[2, 3] { { 1, 2, 3 }, { 4, 5, 6 } };
 
-            MatCalc.Multi(m1, m2);
+            MatrixMath.Multi(m1, m2);
         }
     }
 }

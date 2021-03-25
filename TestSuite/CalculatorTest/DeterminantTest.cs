@@ -7,11 +7,18 @@ namespace TestSuite.MatrixCalculator
     public class DeterminantTest
     {
         [TestMethod]
+        public void Determinant_1x1_Ok()
+        {
+            float[,] m = new float[1, 1] { { 1 } };
+            Assert.IsTrue(MatrixMath.Determinant(m) == 1);
+        }
+
+        [TestMethod]
         public void Determinant_2x2_Ok()
         {
             float[,] m = new float[2, 2] { { 1, 2 }, { 3, 4 } };
             float exp = -2;
-            float res = MatCalc.Determinant(m);
+            float res = MatrixMath.Determinant(m);
 
             Assert.IsTrue(res == exp);
         }
@@ -21,7 +28,7 @@ namespace TestSuite.MatrixCalculator
         {
             float[,] m = new float[3, 3] { { 4, 5, 1 }, { 6, 8, 9 }, { 6, 5, 4 } };
             float exp = 80;
-            float res = MatCalc.Determinant(m);
+            float res = MatrixMath.Determinant(m);
 
             Assert.IsTrue(res == exp);
         }
@@ -31,7 +38,7 @@ namespace TestSuite.MatrixCalculator
         {
             float[,] m = new float[4, 4] { { 4, 5, 3, 7 }, { 6, 4, 8, 6 }, { 3, 2, 5, 3 }, { 6, 7, 8, 9 } };
             float exp = 12;
-            float res = MatCalc.Determinant(m);
+            float res = MatrixMath.Determinant(m);
             
             Assert.IsTrue(res == exp, res.ToString());
         }
@@ -47,18 +54,9 @@ namespace TestSuite.MatrixCalculator
                 { 10000, 20000, 30000, 40000, 50000 }
             };
             float exp = 0;
-            float res = MatCalc.Determinant(m);
+            float res = MatrixMath.Determinant(m);
 
             Assert.IsTrue(res == exp);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(Dimension_1x1_Exception))]
-        public void Determinant_1x1_IdentityMatrixException()
-
-        {
-            float[,] m = new float[1, 1] { { 1 } };
-            MatCalc.Determinant(m);
         }
 
         [TestMethod]
@@ -67,7 +65,7 @@ namespace TestSuite.MatrixCalculator
         {
             float[,] m = new float[3, 4] { { 1, 2, 3, 0 }, { 4, 5, 6, 0 }, { 7, 8, 9, 0 } };
 
-            MatCalc.Determinant(m);
+            MatrixMath.Determinant(m);
         }
     }
 }

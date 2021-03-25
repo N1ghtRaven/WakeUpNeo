@@ -10,7 +10,7 @@ namespace TestSuite.MatrixCalculator
         public void Transpose_2x4_Ok()
         {
             float[,] matrix = new float[2, 4] { { 4, 7, 2, 1 }, { 3, 9, 8, 6 } };
-            float[,] transpose_matrix = MatCalc.Transpose(matrix);
+            float[,] transpose_matrix = MatrixMath.Transpose(matrix);
 
             float[,] exp = new float[4, 2] { { 4, 3 }, { 7, 9 }, { 2, 8 }, { 1, 6 } };
 
@@ -28,8 +28,8 @@ namespace TestSuite.MatrixCalculator
         {
             float[,] matrix = new float[2, 4] { { 4, 7, 2, 1 }, { 3, 9, 8, 6 } };
 
-            float[,] transpose_matrix = MatCalc.Transpose(matrix);
-            float[,] reverse_transpose_matrix = MatCalc.Transpose(transpose_matrix);
+            float[,] transpose_matrix = MatrixMath.Transpose(matrix);
+            float[,] reverse_transpose_matrix = MatrixMath.Transpose(transpose_matrix);
 
             for (ushort x = 0; x < matrix.GetLength(0); x++)
             {
