@@ -25,6 +25,24 @@ namespace TestSuite.MatrixCalculator
         }
 
         [TestMethod]
+        public void Multi_3x3_1x1_Ok()
+        {
+            float[,] m = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+            float[,] n = new float[1, 1] { { 3 } };
+
+            float[,] exp = new float[3, 3] { { 3, 6, 9 }, { 12, 15, 18 }, { 21, 24, 27 } };
+            float[,] res = MatCalc.Multi(m, n);
+
+            for (ushort x = 0; x < 3; x++)
+            {
+                for (ushort y = 0; y < 3; y++)
+                {
+                    Assert.IsTrue(exp[x, y] == res[x, y]);
+                }
+            }
+        }
+
+        [TestMethod]
         public void Multi_3x3_0_Ok()
         {
             float[,] m = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };

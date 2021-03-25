@@ -75,6 +75,18 @@
         /// <param name="matrix_2">Слагаемая матрица.</param>
         public static float[,] Multi(float[,] matrix_1, float[,] matrix_2)
         {
+            // Если матрица 1 содержит один элемент вызов метода умножения на число
+            if (matrix_1.GetLength(0) == 1 && matrix_1.GetLength(1) == 1)
+            {
+                return Multi(matrix_2, matrix_1[0, 0]);
+            }
+
+            // Если матрица 2 содержит один элемент вызов метода умножения на число
+            if (matrix_2.GetLength(0) == 1 && matrix_2.GetLength(1) == 1)
+            {
+                return Multi(matrix_1, matrix_2[0, 0]);
+            }
+
             // Проверка на количество столбцов и количество строк
             if (matrix_1.GetLength(1) != matrix_2.GetLength(0))
             {
@@ -122,6 +134,25 @@
         }
 
         /// <summary>
+        /// Возводит матрицу в степень и возвращает результат.
+        /// </summary>
+        /// <returns>
+        /// Матрица возведенная в степень.
+        /// </returns>
+        /// <param name="matrix">Матрица.</param>
+        /// <param name="power">Степень.</param>
+        public static float[,] Pow(float[,] matrix, float power)
+        {
+            float[,] res = matrix;
+            while (--power > 0)
+            {
+                res = Multi(res, matrix);
+            }
+
+            return res;
+        }
+
+        /// <summary>
         /// Находит определитель матрицы любой размерности больше "1" и возвращает его.
         /// </summary>
         /// <returns>
@@ -138,15 +169,11 @@
                 throw new NotSquareException(matrix);
             }
 
-            // Проверка на "размерность"
-            if (matrix.GetLength(0) == 1)
-            {
-                throw new Dimension_1x1_Exception(matrix);
-            }
-
             // На основе размерности вызываем метод определения
             switch (matrix.GetLength(0))
             {
+                case 1:
+                    return Determinant_1x1(matrix);
                 case 2:
                     return Determinant_2x2(matrix);
                 case 3:
@@ -154,6 +181,18 @@
                 default:
                     return Determinant_NxN(matrix);
             }
+        }
+
+        /// <summary>
+        /// Находит определитель для матрицы 1x1 и возвращает его.
+        /// </summary>
+        /// <returns>
+        /// Определитель матрицы.
+        /// </returns>
+        /// <param name="matrix">Матрица для которой вычисляется определитель.</param>
+        private static float Determinant_1x1(float[,] matrix)
+        {
+            return matrix[0, 0];
         }
 
         /// <summary>
@@ -311,7 +350,7 @@
         }
 
         /// <summary>
-        /// Вычисляет обратную матрицу методом Йордана-Гаусса и возвращает её.
+        /// Вычисляет обратную матрицу методом разложения определителя и возвращает её.
         /// </summary>
         /// <returns>
         /// Обратная матрица.
@@ -320,99 +359,42 @@
         /// <param name="matrix">Матрица для которой вычисляется обратная матрица.</param>
         public static float[,] Inverse(float[,] matrix)
         {
-            // Проверка на "нулевой" определитель
-            float det = Determinant(matrix);
-            if (Determinant(matrix) == 0)
+            // Проверка на "нулевой" определитель вырожденная матрица
+            float determinant = Determinant(matrix);
+            if (determinant == 0)
             {
-                throw new ZeroDeterminantException(det);
+                throw new ZeroDeterminantException(determinant);
             }
+            determinant = 1 / determinant;
 
             ushort dimension = (ushort)matrix.GetLength(0);
-            
-            // Создание "единичной" матрицы
-            float[,] identity_matrix = new float[dimension, dimension];
-            for (ushort row = 0; row < dimension; row++)
+            float[,] inverse_mat = new float[dimension, dimension];
+
+            // Обратная матрица для 1x1
+            if (dimension == 1)
             {
-                for (ushort col = 0; col < dimension; col++)
-                {
-                    if (row == col)
-                    {
-                        identity_matrix[row,col] = 1;
-                    }
-                }
+                inverse_mat[0, 0] = determinant;
+                return inverse_mat;
             }
 
-            for (ushort row = 0; row < dimension; row++)
+            bool sign = true;
+            for (short row = 0; row < dimension; row++)
             {
-                // Если разрешающий элемент главной диагонали равен "0", поиск возможной замена и последующий обмен строк
-                if (matrix[row, row] == 0)
+                bool sign2 = sign;
+                for (short col = 0; col < dimension; col++)
                 {
-                    for (ushort row_2 = 0; row_2 < dimension; row_2++)
-                    {
-                        if (matrix[row_2, row] != 0)
-                        {
-                            for (ushort i = 0; i < dimension; i++)
-                            {
-                                float tmp = matrix[row, i];
-                                matrix[row, i] = matrix[row_2, i];
-                                matrix[row_2, i] = tmp;
-
-                                tmp = identity_matrix[row, i];
-                                identity_matrix[row, i] = identity_matrix[row_2, i];
-                                identity_matrix[row_2, i] = tmp;
-                            }
-                        }
-                    }
-
-                    // Повторная проверка
-                    if (matrix[row, row] == 0)
-                    {
-                        continue;
-                    }
+                    // Удаление строки и столбца и вычисление определителя для неё
+                    float det = Determinant(CutRowAndCol(matrix, col, row));
+                    // Установка знака определителю
+                    inverse_mat[row, col] = determinant * (sign2 ? det : -det);
+                    // Инверсия знака
+                    sign2 = !sign2;
                 }
-
-                // Строка матрицы делится на разрешающий элемент
-                for (ushort col = (ushort)(row + 1); col < dimension; col++)
-                {
-                    matrix[row, col] /= matrix[row, row];
-                }
-
-                // Строка "единичной" матрицы делится на разрешающий элемент
-                for (ushort col = 0; col < dimension; col++)
-                {
-                    identity_matrix[row, col] /= matrix[row, row];
-                }
-
-                // От нижней строки вычитаем верхнию умноженную на не диагональный элемент
-                if (row > 0)
-                {
-                    for (ushort row_2 = 0; row_2 < row; row_2++)
-                    {
-                        for (ushort col_2 = 0; col_2 < dimension; col_2++)
-                        {
-                            identity_matrix[row_2, col_2] = identity_matrix[row_2, col_2] - identity_matrix[row, col_2] * matrix[row_2, row];
-                        }
-                        for (ushort col_2 = (ushort)(dimension - 1); col_2 >= row; col_2--)
-                        {
-                            matrix[row_2, col_2] = matrix[row_2, col_2] - matrix[row, col_2] * matrix[row_2, row];
-                        }
-                    }
-                }
-                for (ushort row_2 = (ushort)(row + 1); row_2 < dimension; row_2++)
-                {
-                    for (ushort col_2 = 0; col_2 < dimension; col_2++)
-                    {
-                        identity_matrix[row_2, col_2] = identity_matrix[row_2, col_2] - identity_matrix[row, col_2] * matrix[row_2, row];
-                    }
-                    for (ushort col_2 = (ushort)(dimension - 1); col_2 > row; col_2--)
-                    {
-                        matrix[row_2, col_2] = matrix[row_2, col_2] - matrix[row, col_2] * matrix[row_2, row];
-                    }
-    
-                }
+                // Инверсия знака
+                sign = !sign;
             }
 
-            return identity_matrix;
+            return inverse_mat;
         }
 
         /// <summary>
