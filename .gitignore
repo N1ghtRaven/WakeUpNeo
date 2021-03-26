@@ -1,6 +1,4 @@
-MatrixCalculator/bin
-MatrixCalculator/obj
-TestSuite/bin
-TestSuite/obj
 TestResult
+*/bin
+*/obj
 .vs
