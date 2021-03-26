@@ -131,7 +131,7 @@
             {
                 for (ushort col = 0; col < matrix.GetLength(1); col++)
                 {
-                    res[row, col] = matrix[row, col] + number;
+                    res[row, col] = matrix[row, col] * number;
                 }
             }
 

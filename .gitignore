@@ -1,4 +1,5 @@
 TestResult
 */bin
 */obj
+*/*.user
 .vs
