@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 
 namespace MatrixCalculator
 {
@@ -53,7 +54,7 @@ namespace MatrixCalculator
         /// <exception cref="SetReservedVariableException">Срабатывает когда ведется перезапись зарезервированных переменных.</exception>
         /// <param name="name">Имя переменной.</param>
         /// <param name="value">Значение переменной.</param>
-        public void setVariable(string name, float[,] value)
+        public void SetVariable(string name, float[,] value)
         {
             if (name.Equals("T"))
             {
@@ -64,6 +65,21 @@ namespace MatrixCalculator
         }
 
         /// <summary>
+        /// Удаляет переменную.
+        /// </summary>
+        /// <exception cref="VariableNotFoundException">Срабатывает когда переменная не найдена.</exception>
+        /// <param name="name">Имя переменной.</param>
+        public void RemoveVariable(string name)
+        {
+            if (!vars.ContainsKey(name))
+            {
+                throw new VariableNotFoundException(name);
+            }
+
+            vars.Remove(name);
+        }
+
+        /// <summary>
         /// Берет переменную.
         /// </summary>
         /// <returns>
@@ -71,7 +87,7 @@ namespace MatrixCalculator
         /// </returns>
         /// <exception cref="VariableNotFoundException">Срабатывает когда переменная не найдена.</exception>
         /// <param name="name">Имя переменной.</param>
-        public float[,] getVariable(string name)
+        public float[,] GetVariable(string name)
         {
             if (!vars.ContainsKey(name))
             {
@@ -213,7 +229,7 @@ namespace MatrixCalculator
                 }
                 else
                 {
-                    return new Result(getVariable(name), expr.Substring(name.Length));
+                    return new Result(GetVariable(name), expr.Substring(name.Length));
                 }
             }
 
@@ -278,7 +294,7 @@ namespace MatrixCalculator
             }
 
             // Конвертация строки в матрицу 1x1 и установка знака
-            float num = float.Parse(expr.Substring(0, num_offset));
+            float num = float.Parse(expr.Substring(0, num_offset), CultureInfo.InvariantCulture);
             float[,] num_mat = new float[1, 1] { { negative ? -num : num } };
 
             return new Result(num_mat, expr.Substring(num_offset));

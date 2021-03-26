@@ -23,16 +23,18 @@
                 throw new DifferentDimensionException(matrix_1, matrix_2);
             }
 
+            float[,] res = new float[matrix_1.GetLength(0), matrix_1.GetLength(1)];
+
             // Цикличное сложение
             for (ushort row = 0; row < matrix_1.GetLength(0); row++)
             {
                 for (ushort col = 0; col < matrix_1.GetLength(1); col++)
                 {
-                    matrix_1[row, col] += matrix_2[row, col];
+                    res[row, col] = matrix_1[row, col] + matrix_2[row, col];
                 }
             }
 
-            return matrix_1;
+            return res;
         }
 
         /// <summary>
@@ -52,16 +54,17 @@
                 throw new DifferentDimensionException(matrix_1, matrix_2);
             }
 
+            float[,] res = new float[matrix_1.GetLength(0), matrix_1.GetLength(1)];
             // Цикличное вычитание
             for (ushort row = 0; row < matrix_1.GetLength(0); row++)
             {
                 for (ushort col = 0; col < matrix_1.GetLength(1); col++)
                 {
-                     matrix_1[row, col] -= matrix_2[row, col];
+                    res[row, col] = matrix_1[row, col] - matrix_2[row, col];
                 }
             }
 
-            return matrix_1;
+            return res;
         }
 
         /// <summary>
@@ -121,16 +124,18 @@
         /// <param name="number">Слагаемое.</param>
         public static float[,] Multi(float[,] matrix, float number)
         {
+            float[,] res = new float[matrix.GetLength(0), matrix.GetLength(1)];
+
             // Цикличное умножение элементов матрицы на число
             for (ushort row = 0; row < matrix.GetLength(0); row++)
             {
                 for (ushort col = 0; col < matrix.GetLength(1); col++)
                 {
-                    matrix[row, col] *= number;
+                    res[row, col] = matrix[row, col] + number;
                 }
             }
 
-            return matrix;
+            return res;
         }
 
         /// <summary>

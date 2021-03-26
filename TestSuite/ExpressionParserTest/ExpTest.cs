@@ -13,7 +13,7 @@ namespace TestSuite.ParserTest
             MatrixExpressionParser math = new MatrixExpressionParser();
 
             float[,] matrix = new float[2, 4] { { 4, 7, 2, 1 }, { 3, 9, 8, 6 } };
-            math.setVariable("A", matrix);
+            math.SetVariable("A", matrix);
 
             float[,] transpose_matrix = math.Parse("A^T");
             float[,] exp = new float[4, 2] { { 4, 3 }, { 7, 9 }, { 2, 8 }, { 1, 6 } };
@@ -35,7 +35,7 @@ namespace TestSuite.ParserTest
             float[,] matrix = new float[2, 2] { { 1, 2 }, { 3, 4 } };
             float[,] exp = new float[2, 2] { { 37, 54 }, { 81, 118 } };
 
-            math.setVariable("A", matrix);
+            math.SetVariable("A", matrix);
 
             float[,] pow_matrix = math.Parse("A^3");
             for (ushort x = 0; x < pow_matrix.GetLength(0); x++)
@@ -59,7 +59,7 @@ namespace TestSuite.ParserTest
                 { -4, 8, -8, -3 }
             };
 
-            math.setVariable("A", m);
+            math.SetVariable("A", m);
 
             float[,] e = new float[4, 4] {
                 { 5.56F, -0.77F, -0.93F, 4.73F },

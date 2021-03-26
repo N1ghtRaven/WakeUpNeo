@@ -14,8 +14,8 @@ namespace TestSuite.ParserTest
             float[,] m1 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
             float[,] m2 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
 
-            math.setVariable("A", m1);
-            math.setVariable("B", m2);
+            math.SetVariable("A", m1);
+            math.SetVariable("B", m2);
 
             float[,] exp = new float[3, 3] { { 2, 4, 6 }, { 8, 10, 12 }, { 14, 16, 18 } };
             float[,] res = math.Parse("A+B");
@@ -37,8 +37,8 @@ namespace TestSuite.ParserTest
             float[,] m1 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
             float[,] m2 = new float[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
 
-            math.setVariable("A", m1);
-            math.setVariable("B", m2);
+            math.SetVariable("A", m1);
+            math.SetVariable("B", m2);
 
             float[,] exp = new float[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
             float[,] res = math.Parse("A-B");

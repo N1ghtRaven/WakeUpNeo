@@ -14,8 +14,8 @@ namespace TestSuite.ParserTest
             float[,] m1 = new float[2, 3] { { 1, 2, 3 }, { 4, 5, 6 } };
             float[,] m2 = new float[3, 2] { { 1, 2 }, { 3, 4 }, { 5, 6 } };
 
-            math.setVariable("A", m1);
-            math.setVariable("B", m2);
+            math.SetVariable("A", m1);
+            math.SetVariable("B", m2);
 
             float[,] exp = new float[2, 2] { { 22, 28 }, { 49, 64 } };
             float[,] res = math.Parse("A*B");
