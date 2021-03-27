@@ -78,7 +78,7 @@ namespace GUI
                     try
                     {
                         float[,] m = expressionParser.Parse(commandBox.Text);
-                        matrix = new Matrix<float>("result", m, new MatrixSize(m.GetLength(0), m.GetLength(0)));
+                        matrix = new Matrix<float>("result", m, new MatrixSize(m.GetLength(1), m.GetLength(0)));
 
                         // Очистить результирующую вкладку и вывести на неё матрицу
                         resultTab.Controls.Clear();
@@ -168,9 +168,9 @@ namespace GUI
                         // Выровнять по центру
                         TextAlign = HorizontalAlignment.Center,
                         // Добавить метаданные для возможности изменения значения в матрице
-                        Tag = string.Format("{0}_{1}_{2}", row, col, tab.Text),
+                        Tag = string.Format("{0}_{1}_{2}", col, row, tab.Text),
                         Size = new Size(30, 20),
-                        Location = new Point(40 * row, (35 * col) + 21),
+                        Location = new Point(40 * col, (35 * row) + 21),
                         // Возможность редактировть
                         Enabled = editable
                     };

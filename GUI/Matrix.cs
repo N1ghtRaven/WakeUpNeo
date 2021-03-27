@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-namespace GUI
+﻿namespace GUI
 {
     public struct MatrixSize
     {

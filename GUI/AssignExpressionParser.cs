@@ -75,7 +75,7 @@ namespace GUI
 
             Result r = GetName(expr);
             // Вычислить размер массива
-            MatrixSize matrixSize = new MatrixSize(GetRowCount(r), GetColumnCount(r));
+            MatrixSize matrixSize = new MatrixSize(GetColumnCount(r), GetRowCount(r));
 
             float[,] matrix = new float[matrixSize.Columns, matrixSize.Rows];
             for (int row = 0; row < matrixSize.Columns; row++)
