@@ -23,11 +23,49 @@ namespace GUI
         /// </summary>
         private void AdaptiveResize()
         {
-            // TODO: Доделать резиновую верстку
+            // Изменить размер статичных элементов
             statusLabel.Location = new Point(5, ClientSize.Height - 20);
             commandBox.Location = new Point(statusLabel.Location.X, statusLabel.Location.Y - 25);
             commandBox.Size = new Size(ClientSize.Width - (commandBox.Location.X * 2), Height);
             matrixPanel.Size = new Size(ClientSize.Width, ClientSize.Height - 50);
+
+            // Центровка матриц
+            foreach (TabPage tab in matrixPanel.Controls)
+            {
+                // Достать матрицу из Тега
+                Matrix<float> matrix = (Matrix<float>)tab.Tag;
+                if (matrix == null)
+                {
+                    continue;
+                }
+
+                // Координата центра вкладки
+                Point tabCenter = new Point(tab.ClientSize.Width / 2, tab.ClientSize.Height / 2);
+
+                // Координата дальнего элемента
+                Point farElem = new Point((40 * (matrix.Size.Columns - 1)) + 30, (35 * (matrix.Size.Rows - 1)) + 20);
+                // Координаты центра матрицы
+                Point matrixCenter = new Point(farElem.X / 2, farElem.Y / 2);
+
+                // Достать объекты на вкладке
+                foreach (object o in tab.Controls)
+                {
+                    // Если кнопка, изменить ей ширину и взять следующий объект
+                    if (o.GetType() != typeof(TextBox))
+                    {
+                        ((Button)o).Size = new Size(tab.ClientSize.Width, 21);
+                        continue;
+                    }
+
+                    // Если поле ввода, разобрать её тег и изменить положение на вкладке
+                    TextBox textBox = (TextBox)o;
+                    string[] tag = textBox.Tag.ToString().Split("_");
+                    int row = int.Parse(tag[0]);
+                    int col = int.Parse(tag[1]);
+
+                    textBox.Location = new Point((40 * col) + tabCenter.X - matrixCenter.X, (35 * row) + tabCenter.Y - matrixCenter.Y);
+                }
+            }
         }
 
         private void App_Resize(object sender, EventArgs e)
@@ -95,7 +133,7 @@ namespace GUI
                 // Если не похоже, то пытаемся его посчитать
                 else
                 {
-                    // Попытка разобрать матричное выражение и посчитать его, если в процессе будут ошибки вывести в статус бар и прерват дальнейнее выполнение.
+                    // Попытка разобрать матричное выражение и посчитать его, если в процессе будут ошибки вывести в статус бар и прервать дальнейнее выполнение.
                     try
                     {
                         float[,] m = expressionParser.Parse(commandBox.Text);
@@ -178,6 +216,14 @@ namespace GUI
                 }
             }
 
+            // Координата центра вкладки
+            Point tabCenter = new Point(tab.ClientSize.Width / 2, tab.ClientSize.Height / 2);
+
+            // Координата дальнего элемента
+            Point farElem = new Point((40 * (matrix.Size.Columns - 1)) + 30, (35 * (matrix.Size.Rows - 1)) + 20);
+            // Координаты центра матрицы
+            Point matrixCenter = new Point(farElem.X / 2, farElem.Y / 2);
+
             for (int row = 0; row < matrix.Size.Rows; row++)
             {
                 for (int col = 0; col < matrix.Size.Columns; col++)
@@ -192,7 +238,8 @@ namespace GUI
                         // Добавить метаданные для возможности изменения значения в матрице
                         Tag = string.Format("{0}_{1}_{2}", row, col, tab.Text),
                         Size = new Size(30, 20),
-                        Location = new Point(40 * col, (35 * row) + 25),
+                        // Центрирование элементов
+                        Location = new Point((40 * col) + tabCenter.X - matrixCenter.X, (35 * row) + tabCenter.Y - matrixCenter.Y),
                         // Возможность вносить изменения в матрицу
                         Enabled = editable
                     };
@@ -240,12 +287,12 @@ namespace GUI
                             }
                         });
 
+                    // Положить матрицу в Тег (нужно для динамической центровки)
+                    tab.Tag = matrix;
                     // Добавить поле ввода на вкладку
                     tab.Controls.Add(tb);
                 }
             }
         }
-
-
     }
 }
