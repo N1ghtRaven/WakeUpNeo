@@ -10,6 +10,7 @@ namespace GUI
     public partial class App : Form
     {
         private readonly MatrixExpressionParser expressionParser = new MatrixExpressionParser();
+        private readonly History history = new History();
 
         public App()
         {
@@ -43,13 +44,30 @@ namespace GUI
             statusLabel.Text = "Статус: " + status;
         }
 
+        private void commandBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            TextBox commandBox = (TextBox)sender;
+            switch (e.KeyCode)
+            {
+                case Keys.Up:
+                    commandBox.Text = history.GetOlder(commandBox.Text);
+                    break;
+                case Keys.Down:
+                    commandBox.Text = history.GetYounger(commandBox.Text);
+                    break;
+            }
+        }
+
         private void commandBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
                 TextBox commandBox = (TextBox)sender;
-                Matrix<float> matrix;
 
+                // Запомнить введенный текст
+                history.Put(commandBox.Text);
+
+                Matrix<float> matrix;
                 // Если выражение похоже на присваивание
                 if (AssignExpressionParser.IsAssignCommand(commandBox.Text))
                 {
@@ -57,20 +75,23 @@ namespace GUI
                     try
                     {
                         matrix = AssignExpressionParser.Parse(commandBox.Text);
-                    } catch (ExpressionParseException ex) { SetStatus(ex.Message); return; }
+                    }
+                    catch (ExpressionParseException ex) { SetStatus(ex.Message); commandBox.Text = ""; return; }
 
                     // Если переменная уже существует, вывести уведомление в статус бар и прервать исполнение инструкций.
                     try
                     {
                         expressionParser.GetVariable(matrix.Name);
                         SetStatus(string.Format("Переменная \"{0}\" уже объявлена.", matrix.Name));
+                        commandBox.Text = "";
                         return;
-                    } catch (VariableNotFoundException) {}
-                    
+                    }
+                    catch (VariableNotFoundException) {}
+
                     // Создать вкладку и вывести на нее матрицу.
                     TabPage tab = AddTab(matrix);
                     ShowMatrix(tab, matrix, true);
-                } 
+                }
                 // Если не похоже, то пытаемся его посчитать
                 else
                 {
@@ -78,16 +99,17 @@ namespace GUI
                     try
                     {
                         float[,] m = expressionParser.Parse(commandBox.Text);
-                        matrix = new Matrix<float>("result", m, new MatrixSize(m.GetLength(1), m.GetLength(0)));
+                        matrix = new Matrix<float>("result", m, new MatrixSize(m.GetLength(0), m.GetLength(1)));
 
                         // Очистить результирующую вкладку и вывести на неё матрицу
                         resultTab.Controls.Clear();
                         ShowMatrix(resultTab, matrix, false);
                         SetStatus("Выполнено.");
                     }
-                    catch (ExpressionParseException ex) { SetStatus(ex.Message); return; }
-                    catch (CalculateException ex) { SetStatus(ex.Message); return; }
+                    catch (ExpressionParseException ex) { SetStatus(ex.Message); }
+                    catch (CalculateException ex) { SetStatus(ex.Message); }
                 }
+                commandBox.Text = "";
             }
         }
 
@@ -164,14 +186,14 @@ namespace GUI
                     TextBox tb = new TextBox
                     {
                         // Присвоить значение
-                        Text = matrix[col, row].ToString(),
+                        Text = matrix[row, col].ToString(),
                         // Выровнять по центру
                         TextAlign = HorizontalAlignment.Center,
                         // Добавить метаданные для возможности изменения значения в матрице
-                        Tag = string.Format("{0}_{1}_{2}", col, row, tab.Text),
+                        Tag = string.Format("{0}_{1}_{2}", row, col, tab.Text),
                         Size = new Size(30, 20),
-                        Location = new Point(40 * col, (35 * row) + 21),
-                        // Возможность редактировть
+                        Location = new Point(40 * col, (35 * row) + 25),
+                        // Возможность вносить изменения в матрицу
                         Enabled = editable
                     };
                     // Отслеживание при нажатие клавиш
@@ -223,5 +245,7 @@ namespace GUI
                 }
             }
         }
+
+
     }
 }

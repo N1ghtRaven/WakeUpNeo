@@ -73,6 +73,7 @@ namespace GUI
             this.commandBox.Size = new System.Drawing.Size(100, 23);
             this.commandBox.TabIndex = 2;
             this.commandBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.commandBox_KeyPress);
+            this.commandBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.commandBox_PreviewKeyDown);
             // 
             // App
             // 

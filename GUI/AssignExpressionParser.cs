@@ -77,10 +77,10 @@ namespace GUI
             // Вычислить размер массива
             MatrixSize matrixSize = new MatrixSize(GetColumnCount(r), GetRowCount(r));
 
-            float[,] matrix = new float[matrixSize.Columns, matrixSize.Rows];
-            for (int row = 0; row < matrixSize.Columns; row++)
+            float[,] matrix = new float[matrixSize.Rows, matrixSize.Columns];
+            for (int row = 0; row < matrixSize.Rows; row++)
             {
-                for (int col = 0; col < matrixSize.Rows; col++)
+                for (int col = 0; col < matrixSize.Columns; col++)
                 {
                     // Убрать двоеточие, достать число и положить в массив
                     r.Expression = r.Expression.Replace(':', ' ');
