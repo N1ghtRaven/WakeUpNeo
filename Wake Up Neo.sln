@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSuite", "TestSuite\Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatrixCalculator", "MatrixCalculator\MatrixCalculator.csproj", "{102F8426-2709-441B-9F89-2700EC48B846}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{50F5BAA5-2B49-4623-BA6C-97CD5A01E5F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GUI", "GUI\GUI.csproj", "{50F5BAA5-2B49-4623-BA6C-97CD5A01E5F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,7 +18,6 @@ Global
 		{44AFD781-7267-4170-90BC-FD050A7AEA2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44AFD781-7267-4170-90BC-FD050A7AEA2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44AFD781-7267-4170-90BC-FD050A7AEA2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44AFD781-7267-4170-90BC-FD050A7AEA2B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{102F8426-2709-441B-9F89-2700EC48B846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{102F8426-2709-441B-9F89-2700EC48B846}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{102F8426-2709-441B-9F89-2700EC48B846}.Release|Any CPU.ActiveCfg = Release|Any CPU

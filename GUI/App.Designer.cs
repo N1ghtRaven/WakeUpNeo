@@ -41,7 +41,7 @@ namespace GUI
             this.resultTab.Location = new System.Drawing.Point(4, 24);
             this.resultTab.Name = "resultTab";
             this.resultTab.Padding = new System.Windows.Forms.Padding(3);
-            this.resultTab.Size = new System.Drawing.Size(276, 234);
+            this.resultTab.Size = new System.Drawing.Size(262, 187);
             this.resultTab.TabIndex = 0;
             this.resultTab.Text = "Результат";
             this.resultTab.UseVisualStyleBackColor = true;
@@ -53,13 +53,13 @@ namespace GUI
             this.matrixPanel.Location = new System.Drawing.Point(0, 0);
             this.matrixPanel.Name = "matrixPanel";
             this.matrixPanel.SelectedIndex = 0;
-            this.matrixPanel.Size = new System.Drawing.Size(284, 262);
+            this.matrixPanel.Size = new System.Drawing.Size(270, 215);
             this.matrixPanel.TabIndex = 99;
             // 
             // statusLabel
             // 
             this.statusLabel.AutoSize = true;
-            this.statusLabel.Location = new System.Drawing.Point(4, 423);
+            this.statusLabel.Location = new System.Drawing.Point(4, 246);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(46, 15);
             this.statusLabel.TabIndex = 1;
@@ -67,7 +67,7 @@ namespace GUI
             // 
             // commandBox
             // 
-            this.commandBox.Location = new System.Drawing.Point(41, 387);
+            this.commandBox.Location = new System.Drawing.Point(4, 220);
             this.commandBox.Name = "commandBox";
             this.commandBox.PlaceholderText = "Команда";
             this.commandBox.Size = new System.Drawing.Size(100, 23);
@@ -79,11 +79,12 @@ namespace GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(274, 267);
             this.Controls.Add(this.commandBox);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.matrixPanel);
             this.Name = "App";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Матричный калькулятор";
             this.Resize += new System.EventHandler(this.App_Resize);
             this.matrixPanel.ResumeLayout(false);

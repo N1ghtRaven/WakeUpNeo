@@ -50,8 +50,7 @@ namespace GUI
         /// <param name="expr">Присваюваещее выражение.</param>
         public static bool IsAssignCommand(string expr)
         {
-            //TODO: Проверить выражение
-            Regex assign = new Regex("[A-zА-я]{1,}\\s{0,}=\\s{0,}([0-9-.]{1,}\\s{0,}[:\\s{0,}0-9.-]{0,}){1,}");
+            Regex assign = new Regex("[A-я]*\\s*=((\\s*[0-9-.]\\s*)*:?)*");
             return assign.Match(expr).Value.Equals(expr);
         }
 

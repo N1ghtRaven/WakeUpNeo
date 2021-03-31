@@ -146,12 +146,20 @@
         /// </returns>
         /// <param name="matrix">Матрица.</param>
         /// <param name="power">Степень.</param>
-        public static float[,] Pow(float[,] matrix, float power)
+        public static float[,] Pow(float[,] matrix, short power)
         {
             float[,] res = matrix;
+            
+            if (power < 0)
+            {
+                power *= -1;
+                res = Inverse(res);
+            }
+
+            float[,] buffer = res;
             while (--power > 0)
             {
-                res = Multi(res, matrix);
+                res = Multi(res, buffer);
             }
 
             return res;

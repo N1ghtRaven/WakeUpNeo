@@ -167,7 +167,7 @@ namespace MatrixCalculator
                             return new Result(MatrixMath.Transpose(accum), cur.Expression);
                         }
 
-                        return new Result(MatrixMath.Pow(accum, cur.Accumulator[0, 0]), cur.Expression);
+                        return new Result(MatrixMath.Pow(accum, (short)cur.Accumulator[0, 0]), cur.Expression);
                 }
             }
 

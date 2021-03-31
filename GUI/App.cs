@@ -12,6 +12,8 @@ namespace GUI
         private readonly MatrixExpressionParser expressionParser = new MatrixExpressionParser();
         private readonly History history = new History();
 
+        private readonly Size elemSize = new Size(40, 20);
+
         public App()
         {
             InitializeComponent();
@@ -43,7 +45,7 @@ namespace GUI
                 Point tabCenter = new Point(tab.ClientSize.Width / 2, tab.ClientSize.Height / 2);
 
                 // Координата дальнего элемента
-                Point farElem = new Point((40 * (matrix.Size.Columns - 1)) + 30, (35 * (matrix.Size.Rows - 1)) + 20);
+                Point farElem = new Point(((elemSize.Width + 10) * (matrix.Size.Columns - 1)) + elemSize.Width, ((elemSize.Height + 10) * (matrix.Size.Rows - 1)) + elemSize.Height);
                 // Координаты центра матрицы
                 Point matrixCenter = new Point(farElem.X / 2, farElem.Y / 2);
 
@@ -63,7 +65,7 @@ namespace GUI
                     int row = int.Parse(tag[0]);
                     int col = int.Parse(tag[1]);
 
-                    textBox.Location = new Point((40 * col) + tabCenter.X - matrixCenter.X, (35 * row) + tabCenter.Y - matrixCenter.Y);
+                    textBox.Location = new Point(((elemSize.Width + 10) * col) + tabCenter.X - matrixCenter.X, ((elemSize.Height + 10) * row) + tabCenter.Y - matrixCenter.Y);
                 }
             }
         }
@@ -220,7 +222,7 @@ namespace GUI
             Point tabCenter = new Point(tab.ClientSize.Width / 2, tab.ClientSize.Height / 2);
 
             // Координата дальнего элемента
-            Point farElem = new Point((40 * (matrix.Size.Columns - 1)) + 30, (35 * (matrix.Size.Rows - 1)) + 20);
+            Point farElem = new Point(((elemSize.Width + 10) * (matrix.Size.Columns - 1)) + elemSize.Width, ((elemSize.Height + 10) * (matrix.Size.Rows - 1)) + elemSize.Height);
             // Координаты центра матрицы
             Point matrixCenter = new Point(farElem.X / 2, farElem.Y / 2);
 
@@ -237,9 +239,9 @@ namespace GUI
                         TextAlign = HorizontalAlignment.Center,
                         // Добавить метаданные для возможности изменения значения в матрице
                         Tag = string.Format("{0}_{1}_{2}", row, col, tab.Text),
-                        Size = new Size(30, 20),
+                        Size = elemSize,
                         // Центрирование элементов
-                        Location = new Point((40 * col) + tabCenter.X - matrixCenter.X, (35 * row) + tabCenter.Y - matrixCenter.Y),
+                        Location = new Point(((elemSize.Width + 10) * col) + tabCenter.X - matrixCenter.X, ((elemSize.Height + 10) * row) + tabCenter.Y - matrixCenter.Y),
                         // Возможность вносить изменения в матрицу
                         Enabled = editable
                     };
