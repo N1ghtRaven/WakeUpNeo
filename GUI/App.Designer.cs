@@ -29,6 +29,7 @@ namespace GUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(App));
             this.resultTab = new System.Windows.Forms.TabPage();
             this.matrixPanel = new System.Windows.Forms.TabControl();
             this.statusLabel = new System.Windows.Forms.Label();
@@ -83,6 +84,7 @@ namespace GUI
             this.Controls.Add(this.commandBox);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.matrixPanel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "App";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Матричный калькулятор";
