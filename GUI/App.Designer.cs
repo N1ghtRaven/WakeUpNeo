@@ -81,6 +81,7 @@ namespace GUI
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(274, 267);
+	    this.MinimumSize = new System.Drawing.Size(280, 270); 
             this.Controls.Add(this.commandBox);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.matrixPanel);
